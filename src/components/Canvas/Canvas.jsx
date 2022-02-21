@@ -1,9 +1,9 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Cell, Array2d } from '../../utils/functionConstructors';
 import { remElFromArr, heuristic } from '../../utils/utilFunctions';
 import './Canvas.css';
 
-const Canvas = () => {
+const Canvas = ({fps}) => {
     //creating reference to the canvas element
     const canvasRef = useRef(null);
 
@@ -13,37 +13,36 @@ const Canvas = () => {
         const ctx = canvasElement.getContext("2d");
         
         //make the canvas animate
-        const fps = 60;
-        const interval =  setInterval(update, 1000/fps);
+        const interval =  setInterval(update, 1000/(fps || 60));
 
         //SETUP CODE
         canvasElement.width = window.innerWidth;
+        // canvasElement.style.backgroundColor = "red";
         
         const openSet = [];
         const closedSet = [];
-        let path = [];
-        const XBYX = 30;
+        const VER_HOR_CELLS = 15;
 
         //create grid
-        const grid = new Array2d(XBYX);
+        const grid = new Array2d(VER_HOR_CELLS);
 
         //populate grid with cell objects
-        for(let i = 0; i < XBYX; i++) {
-            for(let j = 0; j < XBYX; j++) {
-                grid[i][j] = new Cell(j,i, ctx);
+        for(let i = 0; i < VER_HOR_CELLS; i++) {
+            for(let j = 0; j < VER_HOR_CELLS; j++) {
+                grid[i][j] = new Cell(j,i, ctx, canvasElement, VER_HOR_CELLS);
             }
         }
 
         //find each cell's neighbors
-        for(let i = 0; i < XBYX; i++) {
-            for(let j = 0; j < XBYX; j++) {
+        for(let i = 0; i < VER_HOR_CELLS; i++) {
+            for(let j = 0; j < VER_HOR_CELLS; j++) {
                 grid[i][j].findNeighbors(grid);
             }
         }
 
         //pick starting and ending points
         const start = grid[0][0];
-        const end = grid[XBYX -1 ][XBYX - 1];
+        const end = grid[VER_HOR_CELLS -1 ][VER_HOR_CELLS - 1];
         start.wall = false;
         end.wall = false;
         let current;
@@ -106,38 +105,33 @@ const Canvas = () => {
             }
             
             //color the grid cells accordingly
-            for(let i = 0; i < XBYX; i++) {
-                for(let j = 0; j < XBYX; j++) {
+            for(let i = 0; i < VER_HOR_CELLS; i++) {
+                for(let j = 0; j < VER_HOR_CELLS; j++) {
                     grid[i][j].drawSelf('white');
                 }
             }
             
             for(let i = 0; i < closedSet.length; i++) {
-                closedSet[i].drawSelf('red');
+                closedSet[i].drawSelf('orange');
             }
             
             for(let i = 0; i < openSet.length; i++) {
-                openSet[i].drawSelf('green');
+                openSet[i].drawSelf('#afa');
             }
 
             current.drawSelf('blue');
             while(current.previous) {
                 current = current.previous;
-                current.drawSelf('blue');
+                current.drawSelf('#33f');
             }
-            
-            // path = [];
-            // path.push(current);
-            // let i = 0;
-            // while(path[i].previous) {
-            //     path.push(path[i].previous);
-            //     i++;
-            // }
-            // for(let i = 0; i < path.length; i++) {
-            //     path[i].drawSelf('blue');
-            // }
+            end.drawSelf('red');
+            start.drawSelf('#3f3');
         }
-    }, []);
+
+        return function cleanup() {
+            clearInterval(interval);
+        }
+    },[]);
 
     return <div className="canvas-container">
         <canvas id="canvas" ref={canvasRef} width="500" height="500"></canvas>

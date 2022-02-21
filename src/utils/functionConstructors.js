@@ -9,23 +9,27 @@ export function Array2d(dimensions) {
 }
 
 //Grid cell object
-export function Cell(x, y, ctx) {
+export function Cell(x, y, ctx, canvas, gridDimensions) {
 	this.x = x;
 	this.y = y;
 	this.wayFromStart = 0;
 	this.wayToEnd = 0;
 	this.wayTotal = 0;
 	this.previous = null;
-	this.dimensions = 15;
+	this.dimensions = 20;
 	this.neighbors = [];
 	this.wall = false;
     this.ctx = ctx;
+    this.gridStartX = canvas.width / 2 - gridDimensions * this.dimensions / 2;
+	this.gridStartY = canvas.height / 2 - gridDimensions * this.dimensions / 2;
+	this.positionX = this.x * this.dimensions + this.gridStartX;
+	this.positionY = this.y * this.dimensions + this.gridStartY;
 
 	if(Math.random() < 0.3) this.wall = true;
 
 	this.drawSelf = function (color) {
 		ctx.beginPath();
-		ctx.rect(this.x * this.dimensions, this.y * this.dimensions, this.dimensions, this.dimensions);
+		ctx.rect(this.positionX, this.positionY, this.dimensions, this.dimensions);
 		ctx.fillStyle = color;
 		if(this.wall) ctx.fillStyle = 'black';
 		ctx.fill();
