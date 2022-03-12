@@ -200,7 +200,7 @@ function App() {
       start.drawSelf("#3f3", start.isPointInside(mouse_x, mouse_y));
 
       //draw text to screen
-      draw_text(ctx, `x: ${mouse_x}, y: ${mouse_y}`, 10, 30);
+      // draw_text(ctx, `x: ${mouse_x}, y: ${mouse_y}`, 10, 30);
 
       //reset mouse click mechanism variables
       mouse_x_OnClick = -1;
@@ -325,7 +325,6 @@ function App() {
         setAutoplay={setAutoplay}
         setRandomize={setRandomize}
       />
-      <footer>footer</footer>
     </div>
   );
 }
