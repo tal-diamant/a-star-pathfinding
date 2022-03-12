@@ -83,4 +83,9 @@ export function heuristic(a, b) {
 	return d;
 }
 
+// export function heuristic(a, b) {
+// 	const d = Math.sqrt((a.x - b.x)**2 + (a.y - b.y)**2);
+// 	return d;
+// }
+
 //-------------------
