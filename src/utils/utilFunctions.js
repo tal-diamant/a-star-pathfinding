@@ -56,7 +56,7 @@ export function distance(x1,y1,x2,y2){
 
 
 //easily draw text to the screen
-export function draw_text(string,x,y){
+export function draw_text(ctx,string,x,y){
 	ctx.fillStyle = "black";
 	ctx.font = "30px Arial";
 	ctx.fillText(string,x,y);
