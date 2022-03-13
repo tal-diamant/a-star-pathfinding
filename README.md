@@ -21,5 +21,5 @@ https://tal-diamant.github.io/a-star-pathfinding/
 
 ### Sources
 
-I used The Coding Train channel on youtube (by the brilliant and hilarious Dan Shiffman) to learn the algorithm and built this project on top of that.
+I used the youtube channel "The Coding Train" (by the brilliant and hilarious Dan Shiffman) to learn the algorithm and built this project on top of that.
 https://www.youtube.com/watch?v=aKYlikFAV4k
