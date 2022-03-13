@@ -10,7 +10,6 @@ A visual example of how the A* algorithm on a grid can look
     • useEffect
     • useRef
 - HTML canvas
-- Firebase firestore
 
 ## Live app
 
